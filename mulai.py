@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import streamlit as st
 
+import live_camera
 import processing as proc
 import ui
 
@@ -181,7 +182,13 @@ MENU = {
         "Emboss": ("Efek timbul pada citra.", render_emboss),
         "Sepia": ("Efek warna sepia klasik.", render_sepia),
     },
+    "Live Camera": {
+        "Video Real-time": ("Efek dan deteksi wajah langsung dari kamera (opsional).", live_camera.render_live),
+    },
 }
+
+# Kategori yang tidak memakai upload gambar
+LIVE_CATEGORIES = {"Live Camera"}
 
 
 def show(session_state):
@@ -199,6 +206,10 @@ def show(session_state):
 
     description, renderer = MENU[category][choice]
     ui.page_header(choice, description)
+
+    if category in LIVE_CATEGORIES:
+        renderer(None, "live")
+        return
 
     img = ui.upload_image(choice)
     if img is not None:

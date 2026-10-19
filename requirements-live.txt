@@ -1,0 +1,4 @@
+# Opsional: hanya untuk halaman "Live Camera" (video real-time).
+-r requirements.txt
+streamlit-webrtc>=0.60
+av>=12.0

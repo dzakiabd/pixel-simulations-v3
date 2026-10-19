@@ -1,6 +1,6 @@
 streamlit>=1.50
 numpy>=1.26
-opencv-python-headless>=4.9
+opencv-python-headless>=4.9,<5
 pillow>=10.0
 scikit-image>=0.22
 matplotlib>=3.8

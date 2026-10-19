@@ -92,12 +92,19 @@ def metric_card(label, value, sub=""):
 
 
 def upload_image(key):
-    """Tampilkan uploader dan kembalikan array RGB uint8 (atau None)."""
-    uploaded = st.file_uploader(
-        "Unggah citra (JPG / PNG)", type=["jpg", "jpeg", "png"], key=f"upload_{key}"
+    """Pilih sumber (file / kamera) dan kembalikan array RGB uint8 (atau None)."""
+    source = st.radio(
+        "Sumber gambar", ["📁 Upload file", "📷 Ambil dari kamera"],
+        horizontal=True, key=f"source_{key}",
     )
+    if source.startswith("📁"):
+        uploaded = st.file_uploader(
+            "Unggah citra (JPG / PNG)", type=["jpg", "jpeg", "png"], key=f"upload_{key}"
+        )
+    else:
+        uploaded = st.camera_input("Ambil foto", key=f"camera_{key}")
     if uploaded is None:
-        st.info("Unggah sebuah gambar untuk memulai simulasi.")
+        st.info("Pilih atau ambil sebuah gambar untuk memulai simulasi.")
         return None
     try:
         return to_rgb_array(Image.open(uploaded))
