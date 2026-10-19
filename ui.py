@@ -17,7 +17,7 @@ html, body, [class*="css"] { font-family: Inter, system-ui, -apple-system, "Sego
     border-radius: 20px; padding: 2.6rem 2rem; text-align: center; color: #fff;
     box-shadow: 0 10px 30px rgba(37, 99, 235, .25); margin-bottom: 1.5rem;
 }
-.hero h1 { font-size: 2.6rem; font-weight: 800; margin: .6rem 0 .3rem; color: #fff; }
+.hero h1 { font-size: clamp(1.7rem, 8vw, 2.6rem); font-weight: 800; margin: .6rem 0 .3rem; color: #fff; overflow-wrap: anywhere; }
 .hero p { font-size: 1.1rem; opacity: .92; margin: 0; }
 .hero .badge {
     display: inline-block; background: rgba(255,255,255,.18); border-radius: 999px;

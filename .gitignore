@@ -7,3 +7,6 @@ venv/
 
 # Dokumentasi internal (PRD, BRD, design system, arsitektur)
 docs/
+
+# Aset portofolio (screenshot/mockup) - hanya lokal
+portfolio/
