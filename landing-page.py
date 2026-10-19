@@ -1,75 +1,51 @@
 import streamlit as st
+
+import ui
 from mulai import show as show_mulai
 
+FEATURES = [
+    ("🎨", "Pre-processing", "Grayscale, histogram, equalization, filtering, edge detection, dan sharpening."),
+    ("🧩", "Segmentasi & Fitur", "Thresholding, Otsu, color moment, HOG, dan Local Binary Pattern."),
+    ("✨", "Efek Visual", "Emboss dan sepia untuk eksperimen cepat."),
+]
+
+
+def _open_app(session_state):
+    session_state["page"] = "mulai"
+
+
 def home(session_state):
-    st.set_page_config(page_title="PixelSimulations", page_icon=":computer:", layout="wide")
-    st.markdown("""
-        <style>
-        .title-center {
-            text-align: center;
-        }
-        </style>
-    """, unsafe_allow_html=True)
+    ui.inject_css()
+    ui.hero(
+        "PixelSimulations",
+        "Simulasi interaktif pengolahan citra digital — unggah gambar, atur parameter, lihat hasilnya.",
+        "ITENAS × KAMPUS MERDEKA",
+    )
 
-    # Menampilkan 2 gambar di tengah halaman secara horizontal menggunakan st.image
-    # col1, col2 = st.columns(2)
-    # with col1:  # Menggunakan with untuk mengatur tata letak gambar di tengah kolom kiri
-    #     st.image("img/itenas-white.png", width=300)
-    # with col2:  # Menggunakan with untuk mengatur tata letak gambar di tengah kolom kanan
-    #     st.image("img/logo-kemendikbud.png", width=100)
+    for column, (icon, title, text) in zip(st.columns(len(FEATURES)), FEATURES):
+        with column:
+            ui.feature_card(icon, title, text)
 
-    st.image("img/logo-landingpage.png", width=300)
-    # Menampilkan judul di tengah halaman menggunakan st.markdown
-    st.markdown("<h1 class='title-center'>PixelSimulations</h1>", unsafe_allow_html=True)
+    st.write("")
+    _, center, _ = st.columns([1, 1, 1])
+    with center:
+        st.button("🚀 Mulai Simulasi", type="primary", width="stretch",
+                  on_click=_open_app, args=(session_state,), key="mulai_btn")
 
-    # Mengatur tata letak untuk menempatkan tombol di tengah halaman secara horizontal
-    col1, col2 = st.columns(2)
-    with col1:  # Menggunakan with untuk mengatur tata letak tombol di tengah kolom kiri
-        st.write("")  # Kolom kiri kosong untuk menengahkan tombol
+    st.write("")
+    _, logo_left, logo_right, _ = st.columns([2, 1, 1, 2], vertical_alignment="center")
+    logo_left.image("img/itenas.png", width=130)
+    logo_right.image("img/kampus-merdeka.png", width=130)
 
-    # Menggunakan CSS untuk mengatur tombol berada di tengah dan sejajar
-    st.markdown("""
-        <style>
-        .stButton > button {
-            display: block;
-            width: 100%;
-            margin: auto;
-        }
-        </style>
-    """, unsafe_allow_html=True)
-
-    if st.button("Start", key="mulai_btn"):
-        # Jika tombol "Mulai" ditekan, arahkan ke halaman Mulai dari file mulai.py
-        session_state["page"] = "mulai"
-
-    with col2:  # Menggunakan with untuk mengatur tata letak tombol di tengah kolom kanan
-        st.write("")  # Kolom kanan kosong untuk menengahkan tombol
-
-    # if st.button("Info", key="info_btn"):
-    #     # Jika tombol "Info" ditekan, arahkan ke halaman informasi
-    #     session_state["page"] = "info"
-
-def dashboard():
-    st.header("Dashboard")
-    st.write("Ini adalah halaman dashboard dari aplikasi.")
-    # Tambahkan komponen dashboard lainnya di sini...
-
-def info():
-    st.header("Informasi")
-    st.write("Ini adalah halaman informasi dari aplikasi.")
-    st.write("Pada aplikasi ini, Anda dapat melakukan simulasi konvolusi pada gambar.")
-    st.write("Fitur-fitur lainnya akan ditambahkan di sini...")
-    # Tambahkan informasi lebih lanjut sesuai kebutuhan
 
 def main():
-    # Inisialisasi objek SessionState dengan nilai default untuk halaman saat ini
+    st.set_page_config(page_title="PixelSimulations", page_icon="🖼️", layout="wide")
     session_state = st.session_state
-
-    # Menampilkan halaman yang sesuai berdasarkan status session_state
     if session_state.get("page") == "mulai":
         show_mulai(session_state)
     else:
         home(session_state)
+
 
 if __name__ == "__main__":
     main()

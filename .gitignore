@@ -1,0 +1,9 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.streamlit/secrets.toml
+
+# Dokumentasi internal (PRD, BRD, design system, arsitektur)
+docs/
